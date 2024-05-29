@@ -27,3 +27,12 @@ export const markAsDelivered = async (deliveryId: number): Promise<void> => {
     throw error;
   }
 };
+
+export const markedAsPickedUp = async (deliveryId: number): Promise<void> => {
+    try {
+        await api.post(`/deliveries/${deliveryId}/pickedup`);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+    }
