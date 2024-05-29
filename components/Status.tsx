@@ -13,7 +13,7 @@ const Status = ({ status }:{ status:string }) => {
         switch (status) {
             case "PENDING":
                 return <Icon name="more-horiz" size={24} color="#000" />;
-            case "IN_PROGRESS":
+            case "ONGOING":
                 return <Icon name="loop" size={24} color="#000" />;
             case "COMPLETED":
                 return <Icon name="check" size={24} color="#000" />;
