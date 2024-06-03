@@ -1,7 +1,7 @@
-// Deliveries.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { getDeliveries, markAsDelivered, Delivery } from './../app/api';
+import { Order } from './DeliveryCard';
 
 const Deliveries: React.FC = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
@@ -22,9 +22,9 @@ const Deliveries: React.FC = () => {
     }
   };
 
-  const handleMarkAsDelivered = async (id: number) => {
+  const updateOrderStatus = async (orderId: number, status: string) => {
     try {
-      await markAsDelivered(id);
+      await markAsDelivered(orderId);
       fetchDeliveries();
     } catch (error) {
       console.error(error);
@@ -40,13 +40,7 @@ const Deliveries: React.FC = () => {
       data={deliveries}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <View style={styles.deliveryItem}>
-          <Text>{item.description}</Text>
-          <Button
-            title="Mark as Delivered"
-            onPress={() => handleMarkAsDelivered(item.id)}
-          />
-        </View>
+        <Order order={item} updateOrderStatus={updateOrderStatus} />
       )}
     />
   );
