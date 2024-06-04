@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { getDeliveries, markAsDelivered, Delivery } from './../app/api';
-import { Order } from './DeliveryCard';
+import { Text, FlatList, StyleSheet } from 'react-native';
+import { getOrders, markAsDelivered, Order } from '@/app/api';
+import { OrderCard } from './OrderCard';
 
-const Deliveries: React.FC = () => {
-  const [deliveries, setDeliveries] = useState<Delivery[]>([]);
+const Orders: React.FC = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetchDeliveries();
+    fetchOrders()
   }, []);
 
-  const fetchDeliveries = async () => {
+  const fetchOrders = async () => {
     try {
-      const data = await getDeliveries();
-      setDeliveries(data);
+      const data = await getOrders();
+      setOrders(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -25,7 +25,7 @@ const Deliveries: React.FC = () => {
   const updateOrderStatus = async (orderId: number, status: string) => {
     try {
       await markAsDelivered(orderId);
-      fetchDeliveries();
+      fetchOrders();
     } catch (error) {
       console.error(error);
     }
@@ -37,10 +37,21 @@ const Deliveries: React.FC = () => {
 
   return (
     <FlatList
-      data={deliveries}
+      data={orders}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Order order={item} updateOrderStatus={updateOrderStatus} />
+          <OrderCard
+              order={{
+                id: 1,
+                orderId: '1234',
+                deliverer: {
+                  name: 'John',
+                  surname: 'Doe',
+                },
+                status: 'PENDING',
+              }}
+              updateOrderStatus={() => {}}
+          />
       )}
     />
   );
@@ -54,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Deliveries;
+export default Orders;

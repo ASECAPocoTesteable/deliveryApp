@@ -27,7 +27,7 @@ describe('Delivery App Tests', function () {
   it('should mark a delivery as delivered', async () => {
     const button = await driver.elementByAccessibilityId('Mark as Delivered');
     await button.click();
-    const confirmation = await driver.elementByClassName('android.widget.Toast');
+    const confirmation = await driver.elementsByClassName('android.widget.Toast');
     assert(confirmation);
   });
 });

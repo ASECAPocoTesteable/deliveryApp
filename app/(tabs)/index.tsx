@@ -1,24 +1,12 @@
 // index.tsx
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import Deliveries from '../../components/Deliveries';
-import { Order } from '@/components/DeliveryCard';
+import Orders from '../../components/Orders';
+import { OrderCard } from '@/components/OrderCard';
 const App: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Deliveries />
-      <Order
-        order={{
-          id: 1,
-          orderId: '1234',
-          deliverer: {
-            name: 'John',
-            surname: 'Doe',
-          },
-          status: 'PENDING',
-        }}
-        updateOrderStatus={() => {}}
-      />
+      <Orders />
     </SafeAreaView>
   );
 };

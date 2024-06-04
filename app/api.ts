@@ -1,17 +1,17 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://localhost:8080',
+  baseURL: 'https://localhost:8082',
 });
 
-export interface Delivery {
+export interface Order {
   id: number;
   description: string;
 }
 
-export const getDeliveries = async (): Promise<Delivery[]> => {
+export const getOrders = async (): Promise<Order[]> => {
   try {
-    const response = await api.get<Delivery[]>('/deliveries');
+    const response = await api.get<Order[]>('/order/1');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -19,20 +19,29 @@ export const getDeliveries = async (): Promise<Delivery[]> => {
   }
 };
 
-export const markAsDelivered = async (deliveryId: number): Promise<void> => {
+export const markAsDelivered = async (orderId: number): Promise<void> => {
   try {
-    await api.post(`/deliveries/${deliveryId}/delivered`);
+    await api.post(`/order/${orderId}/complete`);
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const markedAsPickedUp = async (deliveryId: number): Promise<void> => {
+export const markAsPickedUp = async (orderId: number): Promise<void> => {
     try {
-        await api.post(`/deliveries/${deliveryId}/pickedup`);
+        await api.post(`/order/${orderId}/take`);
     } catch (error) {
         console.error(error);
         throw error;
     }
+};
+
+export const markIncident = async (orderId: number): Promise<void> => {
+    try {
+        await api.post(`/order/{orderId}/incident`);
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
+};

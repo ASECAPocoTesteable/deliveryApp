@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Status from "./Status";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-const Order = ({
+const OrderCard = ({
   order,
   updateOrderStatus,
 }: {
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Order };
+export { OrderCard };
