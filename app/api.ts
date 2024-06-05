@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://localhost:8082',
+  baseURL: 'http://localhost:8082',
 });
 
 export interface Order {
@@ -39,7 +39,7 @@ export const markAsPickedUp = async (orderId: number): Promise<void> => {
 
 export const markIncident = async (orderId: number): Promise<void> => {
     try {
-        await api.post(`/order/{orderId}/incident`);
+        await api.post(`/order/${orderId}/incident`);
     } catch (error) {
         console.error(error);
         throw error;

@@ -4,57 +4,69 @@ import Status from "./Status";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const OrderCard = ({
-  order,
-  updateOrderStatus,
-}: {
+                     order,
+                     updateOrderStatus,
+                   }: {
   order: any;
-  updateOrderStatus: any;
+  updateOrderStatus: (orderId: number, newStatus: string) => void;
 }) => {
-  const renderIcon = (status: string) => {
-    switch (status) {
-      case "PENDING":
-        return <Icon name="hourglass-empty" size={24} color="#fff" />;
-      case "IN_PROGRESS":
-        return <Icon name="loop" size={24} color="#fff" />;
-      case "COMPLETED":
-        return <Icon name="check-circle" size={24} color="#fff" />;
+  const renderButtons = () => {
+    switch (order.status) {
+      case "ASSIGNED":
+        return (
+            <TouchableOpacity
+                style={[styles.button, styles.assigned]}
+                onPress={() => updateOrderStatus(order.id, "INPROGRESS")}
+            >
+              <Text style={styles.buttonText}>Pick Up</Text>
+            </TouchableOpacity>
+        );
+      case "INPROGRESS":
+        return (
+            <>
+              <TouchableOpacity
+                  style={[styles.button, styles.inProgress]}
+                  onPress={() => updateOrderStatus(order.id, "DELIVERED")}
+              >
+                <Text style={styles.buttonText}>Deliver</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                  style={[styles.button, styles.incident]}
+                  onPress={() => updateOrderStatus(order.id, "INCIDENT")}
+              >
+                <Text style={styles.buttonText}>Report Incident</Text>
+              </TouchableOpacity>
+            </>
+        );
+      case "INCIDENT":
+        return (
+            <TouchableOpacity
+                style={[styles.button, styles.solved]}
+                onPress={() => updateOrderStatus(order.id, "SOLVED")}
+            >
+              <Text style={styles.buttonText}>Solved</Text>
+            </TouchableOpacity>
+        );
       default:
         return null;
     }
   };
 
   return (
-    <View style={styles.card} id={order.id}>
-      <View style={styles.infoContainer}>
-        <Text style={styles.header}>Order ID:</Text>
-        <Text style={styles.body}>{order.orderId}</Text>
-        <Text style={styles.header}>Deliverer:</Text>
-        <Text style={styles.body}>
-          {order.deliverer.name} {order.deliverer.surname}
-        </Text>
+      <View style={styles.card} id={order.id}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.header}>Order ID:</Text>
+          <Text style={styles.body}>{order.id}</Text>
+          <Text style={styles.header}>Deliverer:</Text>
+          <Text style={styles.body}>
+            {order.userAddress}
+          </Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Status status={order.status} />
+          {renderButtons()}
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, order.status === "PENDING" && styles.pending]}
-          onPress={() => updateOrderStatus(order.orderId, "PENDING")}
-        >
-          {renderIcon("PENDING")}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, order.status === "IN_PROGRESS" && styles.inProgress]}
-          onPress={() => updateOrderStatus(order.orderId, "IN_PROGRESS")}
-        >
-          {renderIcon("IN_PROGRESS")}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, order.status === "COMPLETED" && styles.completed]}
-          onPress={() => updateOrderStatus(order.orderId, "COMPLETED")}
-        >
-          {renderIcon("COMPLETED")}
-        </TouchableOpacity>
-        <Status status={order.status} />
-      </View>
-    </View>
   );
 };
 
@@ -62,6 +74,7 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "column",
     alignItems: "center",
+    width: 200,
     backgroundColor: "#f5f5f5",
     padding: 16,
     borderRadius: 15,
@@ -87,28 +100,35 @@ const styles = StyleSheet.create({
     color: "#666",
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
   },
   button: {
     height: 45,
-    width: 45,
+    paddingHorizontal: 10,
     backgroundColor: "#4CAF50",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 22.5,
     marginHorizontal: 5,
   },
-  pending: {
-    backgroundColor: "#FFEB3B",
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  assigned: {
+    backgroundColor: "#FFA500",
   },
   inProgress: {
-    backgroundColor: "#FFC107",
+    backgroundColor: "#32CD32",
   },
-  completed: {
-    backgroundColor: "#4CAF50",
+  incident: {
+    backgroundColor: "#FF4500",
+  },
+  solved: {
+    backgroundColor: "#1E90FF",
   },
 });
 
