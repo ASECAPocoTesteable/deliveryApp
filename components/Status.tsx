@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        height: 36,
+        padding:8,
         borderRadius: 10,
     },
     statusText: {

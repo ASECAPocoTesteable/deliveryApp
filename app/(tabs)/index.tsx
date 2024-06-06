@@ -1,25 +1,24 @@
-// index.tsx
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import Orders from '../../components/Orders';
-import { ToastContainer} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Orders from '@/components/Orders';
+import Toast from 'react-native-toast-message';
 
 const App: React.FC = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <ToastContainer />
-      <Orders />
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <Orders />
+        <Toast />
+      </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 30
   },
 });
 

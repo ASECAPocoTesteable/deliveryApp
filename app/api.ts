@@ -1,31 +1,43 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'http://localhost:8082',
+let api = axios.create({
+  baseURL: 'http://192.168.0.156:8082',
 });
 
 export interface Order {
-  id: number;
-  description: string;
+    id: number;
+    userAddress: string;
+    status: string;
+    warehouseDirection: string;
+    products: { id: number; name: string; quantity: number }[];
+}
+
+export const setURL = (url: string) => {
+    api = axios.create({
+        baseURL: url,
+    });
 }
 
 export const getOrders = async (): Promise<Order[]> => {
-  try {
-    const response = await api.get<Order[]>('/order/1');
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+    const promises = [];
+    for (let id = 1; id <= 25; id++) {
+    promises.push(api.get<Order[]>(`/order/${id}`));
+    }
+    const responses = await Promise.all(promises);
+    return responses
+        .map(response => response.data)
+        .flat()
+        .filter(order => order.id !== undefined)
+        .reverse();
 };
 
 export const markAsDelivered = async (orderId: number): Promise<void> => {
-  try {
+    try {
     await api.post(`/order/${orderId}/complete`);
-  } catch (error) {
+    } catch (error) {
     console.error(error);
     throw error;
-  }
+    }
 };
 
 export const markAsPickedUp = async (orderId: number): Promise<void> => {

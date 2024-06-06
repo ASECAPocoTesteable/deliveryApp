@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Status from "./Status";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 const OrderCard = ({
                      order,
@@ -18,7 +17,7 @@ const OrderCard = ({
                 style={[styles.button, styles.assigned]}
                 onPress={() => updateOrderStatus(order.id, "INPROGRESS")}
             >
-              <Text style={styles.buttonText}>Pick Up</Text>
+              <Text style={styles.buttonText}>Recoger</Text>
             </TouchableOpacity>
         );
       case "INPROGRESS":
@@ -28,13 +27,13 @@ const OrderCard = ({
                   style={[styles.button, styles.inProgress]}
                   onPress={() => updateOrderStatus(order.id, "DELIVERED")}
               >
-                <Text style={styles.buttonText}>Deliver</Text>
+                <Text style={styles.buttonText}>Entregar</Text>
               </TouchableOpacity>
               <TouchableOpacity
                   style={[styles.button, styles.incident]}
                   onPress={() => updateOrderStatus(order.id, "INCIDENT")}
               >
-                <Text style={styles.buttonText}>Report Incident</Text>
+                <Text style={styles.buttonText}>Reportar Incidente</Text>
               </TouchableOpacity>
             </>
         );
@@ -44,7 +43,7 @@ const OrderCard = ({
                 style={[styles.button, styles.solved]}
                 onPress={() => updateOrderStatus(order.id, "SOLVED")}
             >
-              <Text style={styles.buttonText}>Solved</Text>
+              <Text style={styles.buttonText}>Solucionado</Text>
             </TouchableOpacity>
         );
       default:
@@ -53,14 +52,20 @@ const OrderCard = ({
   };
 
   return (
-      <View style={styles.card} id={order.id}>
+      <View style={styles.card} id={order.id.toString()}>
         <View style={styles.infoContainer}>
-          <Text style={styles.header}>Order ID:</Text>
+          <Text style={styles.header}>ID del Pedido:</Text>
           <Text style={styles.body}>{order.id}</Text>
-          <Text style={styles.header}>Deliverer:</Text>
-          <Text style={styles.body}>
-            {order.userAddress}
-          </Text>
+          <Text style={styles.header}>Dirección del Cliente:</Text>
+          <Text style={styles.body}>{order.userAddress}</Text>
+          <Text style={styles.header}>Dirección del Almacén:</Text>
+          <Text style={styles.body}>{order.warehouseDirection}</Text>
+          <Text style={styles.header}>Productos:</Text>
+          {order.products.map((product: any) => (
+              <View key={product.id} style={styles.productContainer}>
+                <Text style={styles.productText}>- {product.name} (Cantidad: {product.quantity})</Text>
+              </View>
+          ))}
         </View>
         <View style={styles.buttonContainer}>
           <Status status={order.status} />
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "column",
     alignItems: "center",
-    width: 200,
+    width: "100%", // ajusta el ancho para acomodar la lista de productos
     backgroundColor: "#f5f5f5",
     padding: 16,
     borderRadius: 15,
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start", // alinea los elementos al inicio para mejor presentación
     marginBottom: 10,
   },
   header: {
@@ -96,6 +101,14 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   body: {
+    fontSize: 16,
+    color: "#666",
+    marginBottom: 5, // agrega un margen inferior para separación entre elementos
+  },
+  productContainer: {
+    marginLeft: 10, // agrega un margen izquierdo para identificar los productos
+  },
+  productText: {
     fontSize: 16,
     color: "#666",
   },
@@ -113,6 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 22.5,
     marginHorizontal: 5,
+    marginBottom: 5, // agrega un margen inferior para separación entre botones
   },
   buttonText: {
     color: "#fff",
