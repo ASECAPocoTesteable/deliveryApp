@@ -4,19 +4,22 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Status = ({ status }:{ status:string }) => {
     const statusMap: {[key: string]: string} = {
-        PENDING: "Pending",
-        ONGOING: "Ongoing",
-        COMPLETED: "Delivered",
+        ASSIGNED: "Assigned",
+        INPROGRESS: "In Progress",
+        DELIVERED: "Delivered",
+        INCIDENT: "Incident",
     };
 
     const renderIcon = (status: string) => {
         switch (status) {
-            case "PENDING":
-                return <Icon name="more-horiz" size={24} color="#000" />;
-            case "ONGOING":
-                return <Icon name="loop" size={24} color="#000" />;
-            case "COMPLETED":
-                return <Icon name="check" size={24} color="#000" />;
+            case "ASSIGNED":
+                return <Icon name="more-horiz" size={24} color="#fff" />;
+            case "INPROGRESS":
+                return <Icon name="loop" size={24} color="#fff" />;
+            case "DELIVERED":
+                return <Icon name="check-circle" size={24} color="#fff" />;
+            case "INCIDENT":
+                return <Icon name="error" size={24} color="#fff" />;
             default:
                 return null;
         }
@@ -29,25 +32,27 @@ const Status = ({ status }:{ status:string }) => {
                     styles.iconContainer,
                     {
                         backgroundColor:
-                            status === "PENDING"
-                                ? "#FFD700"
-                                : status === "ONGOING"
+                            status === "ASSIGNED"
                                 ? "#FFA500"
-                                : "#32CD32",
+                                : status === "INPROGRESS"
+                                    ? "#005ae0"
+                                    : status === "DELIVERED"
+                                        ? "#32CD32"
+                                        : status === "INCIDENT"
+                                            ? "#FF4500"
+                                            : "#D3D3D3",
                     },
                 ]}
             >
                 {renderIcon(status)}
             </View>
-            <Text style={styles.statusText}>{statusMap[status]}</Text>
+            <Text style={styles.statusText}>{statusMap[status] || "Unknown"}</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: 95,
-        height: 80,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -58,12 +63,11 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: 36,
-        height: 36,
+        width: "100%",
+        padding:8,
         borderRadius: 10,
     },
     statusText: {
-        marginTop: 8,
         fontSize: 16,
     },
 });

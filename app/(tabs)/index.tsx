@@ -1,34 +1,24 @@
-// index.tsx
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import Deliveries from '../../components/Deliveries';
-import { Order } from '@/components/DeliveryCard';
+import Orders from '@/components/Orders';
+import Toast from 'react-native-toast-message';
+
 const App: React.FC = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Deliveries />
-      <Order
-        order={{
-          id: 1,
-          orderId: '1234',
-          deliverer: {
-            name: 'John',
-            surname: 'Doe',
-          },
-          status: 'PENDING',
-        }}
-        updateOrderStatus={() => {}}
-      />
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <Orders />
+        <Toast />
+      </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 30
   },
 });
 

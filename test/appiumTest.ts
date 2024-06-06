@@ -19,15 +19,15 @@ describe('Delivery App Tests', function () {
     await driver.quit();
   });
 
-  it('should display deliveries', async () => {
-    const deliveries = await driver.elementsByClassName('android.widget.TextView');
-    assert(deliveries.length > 0);
+  it('should display orders', async () => {
+    const orders = await driver.elementByAccessibilityId("1");
+    assert(orders.length > 0);
   });
 
   it('should mark a delivery as delivered', async () => {
     const button = await driver.elementByAccessibilityId('Mark as Delivered');
     await button.click();
-    const confirmation = await driver.elementByClassName('android.widget.Toast');
+    const confirmation = await driver.elementsByClassName('android.widget.Toast');
     assert(confirmation);
   });
 });
