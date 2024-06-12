@@ -38,7 +38,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "~0.19.10",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -48,13 +49,22 @@
     "@types/react": "~18.2.45",
     "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-test-renderer": "^18.0.7",
+    "@wdio/appium-service": "^8.38.2",
+    "@wdio/cli": "^8.38.2",
+    "@wdio/junit-reporter": "^8.38.2",
+    "@wdio/local-runner": "^8.38.2",
+    "@wdio/mocha-framework": "^8.38.2",
+    "@wdio/spec-reporter": "^8.38.2",
+    "appium": "^2.10.3",
+    "appium-uiautomator2-driver": "^3.5.3",
     "jest": "^29.2.1",
     "jest-expo": "~51.0.1",
     "mocha": "^10.4.0",
     "react-test-renderer": "18.2.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.3.3",
-    "wd": "^0.0.26"
+    "wd": "^0.0.26",
+    "webdriverio": "^8.38.2"
   },
   "private": true
 }

@@ -55,7 +55,7 @@ const OrderCard = ({
       <View style={styles.card} id={order.id.toString()}>
         <View style={styles.infoContainer}>
           <Text style={styles.header}>ID del Pedido:</Text>
-          <Text style={styles.body}>{order.id}</Text>
+          <Text style={styles.body} accessibilityLabel={`${order.id}`}>{order.id}</Text>
           <Text style={styles.header}>Dirección del Cliente:</Text>
           <Text style={styles.body}>{order.userAddress}</Text>
           <Text style={styles.header}>Dirección del Almacén:</Text>

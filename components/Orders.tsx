@@ -93,7 +93,7 @@ const Orders: React.FC = () => {
       <View style={styles.container}>
         <TouchableOpacity style={styles.reloadButton} onPress={fetchOrders}>
           <Icon name="refresh" size={24} color="#fff" />
-          <Text style={styles.reloadButtonText}> Recargar Órdenes</Text>
+          <Text style={styles.reloadButtonText}>Recargar Órdenes</Text>
         </TouchableOpacity>
         <FlatList
             data={orders}
